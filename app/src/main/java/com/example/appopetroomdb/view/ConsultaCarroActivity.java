@@ -6,14 +6,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.appopetroomdb.R;
 import com.example.appopetroomdb.adapter.CarroAdapter;
 import com.example.appopetroomdb.controller.CarroController;
+import com.example.appopetroomdb.model.Carro;
 
-public class ConsultaCarroActivity extends AppCompatActivity {
+public class ConsultaCarroActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private ListView lvCarros;
     private CarroAdapter adapter;
@@ -31,6 +34,8 @@ public class ConsultaCarroActivity extends AppCompatActivity {
         editAnoConsulta = findViewById(R.id.editAnoConsulta);
 
         lvCarros.setAdapter(adapter);
+
+        lvCarros.setOnItemClickListener(this);
     }
 
     public void consultarPeloAno(View view) {
@@ -39,5 +44,15 @@ public class ConsultaCarroActivity extends AppCompatActivity {
         adapter.addAll(controller.findByAno(ano));
 
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Carro carro = (Carro)adapterView.getItemAtPosition(i);
+        //Toast.makeText(this, String.valueOf(carro.getId()), Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(ConsultaCarroActivity.this,InsereCarroActivity.class);
+        intent.putExtra("ID",carro.getId());
+        startActivity(intent);
     }
 }

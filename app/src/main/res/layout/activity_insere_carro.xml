@@ -28,10 +28,33 @@
         android:hint="Informe a Placa do Carro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    <Button
-        android:onClick="salvarCarroDB"
-        android:text="SALVAR"
+    <LinearLayout
+        android:id="@+id/layoutInserir"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+        <Button
+            android:onClick="salvarCarroDB"
+            android:text="SALVAR"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/layoutAtualizar"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:onClick="atualizarCarroDB"
+            android:text="ATUALIZAR"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:onClick="removerCarroDB"
+            android:text="REMOVER"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
 
 </LinearLayout>

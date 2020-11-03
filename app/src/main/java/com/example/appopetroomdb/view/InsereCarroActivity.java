@@ -2,9 +2,11 @@ package com.example.appopetroomdb.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.appopetroomdb.R;
@@ -17,6 +19,9 @@ public class InsereCarroActivity extends AppCompatActivity {
 
     private EditText editMarca, editModelo, editAno, editPlaca;
 
+    private LinearLayout layoutInserir, layoutAtualizar;
+
+    private Carro c1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +33,26 @@ public class InsereCarroActivity extends AppCompatActivity {
         editModelo = findViewById(R.id.editModelo);
         editAno = findViewById(R.id.editAno);
         editPlaca = findViewById(R.id.editPlaca);
+
+        layoutInserir = findViewById(R.id.layoutInserir);
+        layoutAtualizar = findViewById(R.id.layoutAtualizar);
+
+        long id = getIntent().getLongExtra("ID",0);
+
+        if(id != 0) {
+            layoutInserir.setVisibility(View.GONE);
+            preencherDados(id);
+        }else{
+            layoutAtualizar.setVisibility(View.GONE);
+        }
+    }
+
+    private void preencherDados(long id) {
+        c1 = controller.findById(id);
+        editMarca.setText(c1.getMarca());
+        editModelo.setText(c1.getModelo());
+        editPlaca.setText(c1.getPlaca());
+        editAno.setText(String.valueOf(c1.getAno()));
     }
 
     public void salvarCarroDB(View view) {
@@ -55,5 +80,26 @@ public class InsereCarroActivity extends AppCompatActivity {
         editMarca.setText("");
         editModelo.setText("");
         editAno.setText("");
+    }
+
+    public void atualizarCarroDB(View view) {
+        c1.setModelo(editModelo.getText().toString());
+        c1.setMarca(editMarca.getText().toString());
+        c1.setPlaca(editPlaca.getText().toString());
+        c1.setAno(Integer.parseInt(editAno.getText().toString()));
+
+        controller.atualizar(c1);
+
+        novatela();
+    }
+
+    private void novatela() {
+        Intent intent = new Intent(InsereCarroActivity.this,MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void removerCarroDB(View view) {
+        controller.remover(c1);
+        novatela();
     }
 }

@@ -21,6 +21,10 @@ public class CarroController {
         return dao.insert(carro);
     }
 
+    public void atualizar(Carro carro){ dao.update(carro); }
+
+    public void remover(Carro carro){ dao.delete(carro); }
+
     public List<Carro> findAll(){
         return dao.getAll();
     }
@@ -28,4 +32,6 @@ public class CarroController {
     public List<Carro> findByAno(int ano){
         return dao.getCarroByAno(ano);
     }
+
+    public Carro findById(long id){ return dao.getCarroById(id);}
 }
